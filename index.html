@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Angel My Sunflower 🌻</title>
+<title>My Sunflower 🌻</title>
 
 <style>
 body {
@@ -18,14 +18,12 @@ body {
     overflow: hidden;
 }
 
-/* Title */
 h1 {
     font-size: 36px;
     color: #3b2600;
     margin-bottom: 20px;
 }
 
-/* Sunflower */
 .sunflower {
     position: relative;
     width: 350px;
@@ -41,13 +39,6 @@ h1 {
     height: 150px;
     background: #4b2e00;
     border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: gold;
-    font-weight: bold;
-    font-size: 28px;
-    text-align: center;
     z-index: 2;
 }
 
@@ -67,7 +58,6 @@ h1 {
     background: #ffcc00;
 }
 
-/* Disable petals */
 .disabled {
     pointer-events: none;
     opacity: 0.6;
@@ -107,7 +97,7 @@ h1 {
     font-weight: bold;
 }
 
-/* Final message */
+/* Final Message */
 .finalMessage {
     position: fixed;
     inset: 0;
@@ -133,11 +123,11 @@ h1 {
 
 <body>
 
-<h1>For My Beautiful Angel 🌻</h1>
+<h1>For You 🌻</h1>
 
 <div class="sunflower">
 
-    <div class="center">Angel 💛</div>
+    <div class="center"></div>
 
     <div class="petal" style="transform: rotate(0deg) translateY(-120px);" onclick="openMessage(0,this)"></div>
     <div class="petal" style="transform: rotate(45deg) translateY(-120px);" onclick="openMessage(1,this)"></div>
@@ -150,7 +140,6 @@ h1 {
 
 </div>
 
-<!-- Popup -->
 <div class="popup" id="popup">
     <div>
         <div id="popupText"></div>
@@ -158,32 +147,29 @@ h1 {
     </div>
 </div>
 
-<!-- Final Big Message -->
 <div class="finalMessage" id="finalMessage">
-Angel… 🌻  
+No more petals left… 🌻  
 
-Every petal carried a truth about you.  
+But my words about you will never end.  
 
 You are beautiful.  
 You are strong.  
-You are kind.  
 You are rare.  
+You are deeply loved.  
 
-And no matter what happens…  
-I will always see you as my sunflower —  
-standing tall, shining bright, and full of warmth. ❤️
+And you will always be special. ❤️
 </div>
 
 <script>
 const messages = [
     "You are more beautiful than you think.",
-    "Your smile changes my whole world.",
+    "Your smile changes everything.",
     "You are stronger than you realize.",
     "Your heart is pure gold.",
-    "You make everything feel lighter.",
-    "You deserve endless happiness.",
+    "You make life brighter.",
+    "You deserve happiness.",
     "You are deeply loved.",
-    "You are my forever Angel."
+    "You are truly amazing."
 ];
 
 let petalsLeft = 8;
@@ -194,21 +180,18 @@ function openMessage(index, petal) {
     document.getElementById("popupText").innerText = messages[index];
     document.getElementById("popup").classList.add("show");
 
-    // disable all petals while popup open
     document.querySelectorAll(".petal").forEach(p => p.classList.add("disabled"));
 }
 
 function closeMessage() {
     document.getElementById("popup").classList.remove("show");
 
-    // remove clicked petal
     if (currentPetal) {
         currentPetal.style.opacity = "0";
         currentPetal.style.pointerEvents = "none";
         petalsLeft--;
     }
 
-    // enable remaining petals
     document.querySelectorAll(".petal").forEach(p => {
         if (p.style.opacity !== "0") {
             p.classList.remove("disabled");

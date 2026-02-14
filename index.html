@@ -3,13 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>My Sunflower 🌻</title>
+<title>A Little Present 🎁</title>
 
 <style>
 body {
     margin: 0;
     height: 100vh;
-    background: linear-gradient(to top, #4da6ff, #FFD700);
+    background: linear-gradient(to top, #ff9a9e, #fad0c4);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -20,48 +20,49 @@ body {
 
 h1 {
     font-size: 36px;
-    color: #3b2600;
+    color: #7a0033;
     margin-bottom: 20px;
 }
 
-.sunflower {
+/* Gift Box */
+.giftBox {
     position: relative;
-    width: 350px;
-    height: 350px;
+    width: 220px;
+    height: 220px;
+    background: #ff4d6d;
+    border-radius: 15px;
+    cursor: pointer;
     display: flex;
     justify-content: center;
     align-items: center;
+    transition: transform 0.3s ease;
 }
 
-/* Center */
-.center {
+.giftBox:hover {
+    transform: scale(1.05);
+}
+
+.lid {
     position: absolute;
-    width: 150px;
-    height: 150px;
-    background: #4b2e00;
-    border-radius: 50%;
-    z-index: 2;
+    top: -40px;
+    width: 240px;
+    height: 60px;
+    background: #c9184a;
+    border-radius: 10px;
 }
 
-/* Petals */
-.petal {
+.ribbon-vertical {
     position: absolute;
-    width: 100px;
-    height: 170px;
-    background: #FFD700;
-    border-radius: 50%;
-    cursor: pointer;
-    transform-origin: center 175px;
-    transition: opacity 0.8s ease, transform 0.5s;
+    width: 30px;
+    height: 220px;
+    background: gold;
 }
 
-.petal:hover {
-    background: #ffcc00;
-}
-
-.disabled {
-    pointer-events: none;
-    opacity: 0.6;
+.ribbon-horizontal {
+    position: absolute;
+    height: 30px;
+    width: 220px;
+    background: gold;
 }
 
 /* Popup */
@@ -124,32 +125,25 @@ h1 {
 
 <body>
 
-<h1>For You 🌻</h1>
+<h1>For You 🎁</h1>
 
-<div class="sunflower">
-    <div class="center"></div>
-
-    <div class="petal"></div>
-    <div class="petal"></div>
-    <div class="petal"></div>
-    <div class="petal"></div>
-    <div class="petal"></div>
-    <div class="petal"></div>
-    <div class="petal"></div>
-    <div class="petal"></div>
+<div class="giftBox" onclick="openGift()">
+    <div class="lid"></div>
+    <div class="ribbon-vertical"></div>
+    <div class="ribbon-horizontal"></div>
 </div>
 
 <div class="popup" id="popup">
     <div>
         <div id="popupText"></div>
-        <button onclick="closeMessage()">Go On 💛</button>
+        <button onclick="closeMessage()">Open Another 💛</button>
     </div>
 </div>
 
 <div class="finalMessage" id="finalMessage">
-No petals left… 🌻  
+You opened every little surprise… 🎁  
 <br><br>
-But my words about you will never run out.  
+But this is the real gift:  
 <br><br>
 You are beautiful.  
 You are strong.  
@@ -171,44 +165,26 @@ const messages = [
     "You are truly amazing."
 ];
 
-let petalsLeft = 8;
-let currentPetal = null;
+let giftsLeft = messages.length;
 
-const petals = document.querySelectorAll(".petal");
+function openGift() {
+    if (giftsLeft <= 0) return;
 
-/* Position petals evenly in circle */
-petals.forEach((petal, index) => {
-    const angle = (360 / petals.length) * index;
-    petal.style.transform = `rotate(${angle}deg) translateY(-150px)`;
-    petal.addEventListener("click", () => openMessage(index, petal));
-});
-
-function openMessage(index, petal) {
-    currentPetal = petal;
-    document.getElementById("popupText").innerText = messages[index];
+    const randomIndex = Math.floor(Math.random() * messages.length);
+    document.getElementById("popupText").innerText = messages[randomIndex];
     document.getElementById("popup").classList.add("show");
 
-    petals.forEach(p => p.classList.add("disabled"));
+    messages.splice(randomIndex, 1);
+    giftsLeft--;
 }
 
 function closeMessage() {
     document.getElementById("popup").classList.remove("show");
 
-    if (currentPetal) {
-        currentPetal.style.opacity = "0";
-        currentPetal.style.pointerEvents = "none";
-        petalsLeft--;
-    }
-
-    petals.forEach(p => {
-        if (p.style.opacity !== "0") {
-            p.classList.remove("disabled");
-        }
-    });
-
-    if (petalsLeft === 0) {
+    if (giftsLeft === 0) {
         setTimeout(() => {
             document.getElementById("finalMessage").classList.add("show");
+            document.querySelector(".giftBox").style.display = "none";
         }, 500);
     }
 }

@@ -9,55 +9,61 @@
 body {
     margin: 0;
     height: 100vh;
-    background: linear-gradient(to top, #87CEEB, #FFD700);
+    background: linear-gradient(to top, #4da6ff, #FFD700);
     display: flex;
     justify-content: center;
     align-items: center;
-    flex-direction: column;
-    font-family: 'Segoe UI', sans-serif;
+    font-family: Arial, sans-serif;
     overflow: hidden;
-    transition: 1s;
+    flex-direction: column;
 }
 
+/* Title */
 h1 {
-    color: #5c3d00;
+    font-size: 36px;
+    color: #3b2600;
     margin-bottom: 20px;
+    text-shadow: 3px 3px 10px rgba(0,0,0,0.4);
 }
 
+/* Sunflower */
 .sunflower {
     position: relative;
-    width: 300px;
-    height: 300px;
-    animation: glow 3s infinite alternate;
+    width: 350px;
+    height: 350px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: glow 2s infinite alternate;
 }
 
 @keyframes glow {
-    from { filter: drop-shadow(0 0 10px gold); }
-    to { filter: drop-shadow(0 0 25px orange); }
+    from { filter: drop-shadow(0 0 15px gold); }
+    to { filter: drop-shadow(0 0 35px orange); }
 }
 
 .center {
     position: absolute;
-    width: 120px;
-    height: 120px;
-    background: #5c3d00;
+    width: 150px;
+    height: 150px;
+    background: #4b2e00;
     border-radius: 50%;
-    top: 90px;
-    left: 90px;
-    z-index: 2;
     display: flex;
     justify-content: center;
     align-items: center;
     color: gold;
     font-weight: bold;
-    font-size: 20px;
+    font-size: 28px;
     text-align: center;
+    box-shadow: inset 0 0 25px #000;
+    z-index: 2;
 }
 
+/* Petals */
 .petal {
     position: absolute;
-    width: 80px;
-    height: 140px;
+    width: 100px;
+    height: 170px;
     background: #FFD700;
     border-radius: 50%;
     cursor: pointer;
@@ -65,41 +71,51 @@ h1 {
     transition: 0.5s;
 }
 
+.petal:hover {
+    background: #ffcc00;
+}
+
+/* Falling animation */
 .fall {
     animation: fallDown 2s forwards ease-in;
 }
 
 @keyframes fallDown {
     to {
-        transform: translateY(600px) rotate(200deg);
+        transform: translateY(700px) rotate(200deg);
         opacity: 0;
     }
 }
 
+/* Message box */
 .message {
     margin-top: 30px;
-    width: 80%;
-    max-width: 400px;
-    min-height: 60px;
-    padding: 15px;
+    width: 85%;
+    max-width: 500px;
+    min-height: 80px;
+    padding: 20px;
     background: white;
-    border-radius: 15px;
+    border-radius: 20px;
     text-align: center;
-    font-size: 18px;
+    font-size: 22px;
+    font-weight: bold;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
 }
 
-/* Big Final Message */
+/* Big final message */
 .bigMessage {
     position: fixed;
     inset: 0;
-    background: rgba(0,0,0,0.8);
+    background: rgba(0,0,0,0.9);
     color: white;
     display: flex;
     justify-content: center;
     align-items: center;
     text-align: center;
     padding: 40px;
-    font-size: 28px;
+    font-size: 34px;
+    font-weight: bold;
+    line-height: 1.6;
     opacity: 0;
     pointer-events: none;
     transition: 2s;
@@ -116,46 +132,51 @@ h1 {
 <h1>For My Beautiful Angel 🌻</h1>
 
 <div class="sunflower">
+
     <div class="center">Angel 💛</div>
 
-    <div class="petal" style="top:-20px; left:110px; transform: rotate(0deg);" onclick="showMessage(0,this)"></div>
-    <div class="petal" style="top:10px; left:190px; transform: rotate(45deg);" onclick="showMessage(1,this)"></div>
-    <div class="petal" style="top:90px; left:230px; transform: rotate(90deg);" onclick="showMessage(2,this)"></div>
-    <div class="petal" style="top:170px; left:190px; transform: rotate(135deg);" onclick="showMessage(3,this)"></div>
-    <div class="petal" style="top:200px; left:110px; transform: rotate(180deg);" onclick="showMessage(4,this)"></div>
-    <div class="petal" style="top:170px; left:30px; transform: rotate(225deg);" onclick="showMessage(5,this)"></div>
-    <div class="petal" style="top:90px; left:-10px; transform: rotate(270deg);" onclick="showMessage(6,this)"></div>
-    <div class="petal" style="top:10px; left:30px; transform: rotate(315deg);" onclick="showMessage(7,this)"></div>
+    <div class="petal" style="transform: rotate(0deg) translateY(-120px);" onclick="showMessage(0,this)"></div>
+    <div class="petal" style="transform: rotate(45deg) translateY(-120px);" onclick="showMessage(1,this)"></div>
+    <div class="petal" style="transform: rotate(90deg) translateY(-120px);" onclick="showMessage(2,this)"></div>
+    <div class="petal" style="transform: rotate(135deg) translateY(-120px);" onclick="showMessage(3,this)"></div>
+    <div class="petal" style="transform: rotate(180deg) translateY(-120px);" onclick="showMessage(4,this)"></div>
+    <div class="petal" style="transform: rotate(225deg) translateY(-120px);" onclick="showMessage(5,this)"></div>
+    <div class="petal" style="transform: rotate(270deg) translateY(-120px);" onclick="showMessage(6,this)"></div>
+    <div class="petal" style="transform: rotate(315deg) translateY(-120px);" onclick="showMessage(7,this)"></div>
+
 </div>
 
 <div class="message" id="messageBox">
-Click every petal to see something special 🌻
+Click each petal 🌻
 </div>
 
 <div class="bigMessage" id="finalMessage">
 Angel… 🌻  
-No matter how many petals fall,  
-my love for you will never fade.  
 
-You are my sunshine on dark days,  
-my calm in chaos,  
-my warmth in winter,  
-and my forever sunflower.  
+Even if every petal falls,  
+my love for you will never disappear.  
 
-You are more than amazing —  
-you are everything. ❤️
+You are my light when days feel dark.  
+You are my warmth when I feel cold.  
+You are the calm in my storms.  
+
+You are not just amazing —  
+you are rare, special, unforgettable.  
+
+You are my sunflower.  
+And I will always choose you. ❤️
 </div>
 
 <script>
 const messages = [
-    "You shine brighter than the sun.",
-    "Your smile heals my heart.",
-    "You are stronger than you think.",
-    "Your heart is pure gold.",
-    "You make life beautiful.",
+    "You are beautiful in ways words cannot describe.",
+    "Your smile is my favorite thing in the world.",
+    "You make life brighter just by existing.",
+    "You are stronger than you realize.",
+    "Your heart is full of kindness.",
+    "You deserve endless happiness.",
     "You are deeply loved.",
-    "You deserve the world.",
-    "You are my forever."
+    "You are my forever Angel."
 ];
 
 let petalsLeft = 8;

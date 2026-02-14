@@ -13,9 +13,9 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
     font-family: Arial, sans-serif;
     overflow: hidden;
-    flex-direction: column;
 }
 
 /* Title */
@@ -23,7 +23,6 @@ h1 {
     font-size: 36px;
     color: #3b2600;
     margin-bottom: 20px;
-    text-shadow: 3px 3px 10px rgba(0,0,0,0.4);
 }
 
 /* Sunflower */
@@ -34,12 +33,6 @@ h1 {
     display: flex;
     justify-content: center;
     align-items: center;
-    animation: glow 2s infinite alternate;
-}
-
-@keyframes glow {
-    from { filter: drop-shadow(0 0 15px gold); }
-    to { filter: drop-shadow(0 0 35px orange); }
 }
 
 .center {
@@ -55,7 +48,6 @@ h1 {
     font-weight: bold;
     font-size: 28px;
     text-align: center;
-    box-shadow: inset 0 0 25px #000;
     z-index: 2;
 }
 
@@ -75,53 +67,65 @@ h1 {
     background: #ffcc00;
 }
 
-/* Falling animation */
-.fall {
-    animation: fallDown 2s forwards ease-in;
+/* Disable petals */
+.disabled {
+    pointer-events: none;
+    opacity: 0.6;
 }
 
-@keyframes fallDown {
-    to {
-        transform: translateY(700px) rotate(200deg);
-        opacity: 0;
-    }
-}
-
-/* Message box */
-.message {
-    margin-top: 30px;
-    width: 85%;
-    max-width: 500px;
-    min-height: 80px;
-    padding: 20px;
-    background: white;
-    border-radius: 20px;
-    text-align: center;
-    font-size: 22px;
-    font-weight: bold;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
-}
-
-/* Big final message */
-.bigMessage {
+/* Popup */
+.popup {
     position: fixed;
     inset: 0;
-    background: rgba(0,0,0,0.9);
+    background: rgba(0,0,0,0.85);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 40px;
+    color: white;
+    font-size: 28px;
+    font-weight: bold;
+    opacity: 0;
+    pointer-events: none;
+    transition: 0.5s;
+}
+
+.popup.show {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.popup button {
+    margin-top: 30px;
+    padding: 15px 30px;
+    font-size: 20px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    background: gold;
+    font-weight: bold;
+}
+
+/* Final message */
+.finalMessage {
+    position: fixed;
+    inset: 0;
+    background: black;
     color: white;
     display: flex;
     justify-content: center;
     align-items: center;
     text-align: center;
     padding: 40px;
-    font-size: 34px;
+    font-size: 32px;
     font-weight: bold;
-    line-height: 1.6;
     opacity: 0;
     pointer-events: none;
     transition: 2s;
 }
 
-.bigMessage.show {
+.finalMessage.show {
     opacity: 1;
 }
 </style>
@@ -135,62 +139,86 @@ h1 {
 
     <div class="center">Angel 💛</div>
 
-    <div class="petal" style="transform: rotate(0deg) translateY(-120px);" onclick="showMessage(0,this)"></div>
-    <div class="petal" style="transform: rotate(45deg) translateY(-120px);" onclick="showMessage(1,this)"></div>
-    <div class="petal" style="transform: rotate(90deg) translateY(-120px);" onclick="showMessage(2,this)"></div>
-    <div class="petal" style="transform: rotate(135deg) translateY(-120px);" onclick="showMessage(3,this)"></div>
-    <div class="petal" style="transform: rotate(180deg) translateY(-120px);" onclick="showMessage(4,this)"></div>
-    <div class="petal" style="transform: rotate(225deg) translateY(-120px);" onclick="showMessage(5,this)"></div>
-    <div class="petal" style="transform: rotate(270deg) translateY(-120px);" onclick="showMessage(6,this)"></div>
-    <div class="petal" style="transform: rotate(315deg) translateY(-120px);" onclick="showMessage(7,this)"></div>
+    <div class="petal" style="transform: rotate(0deg) translateY(-120px);" onclick="openMessage(0,this)"></div>
+    <div class="petal" style="transform: rotate(45deg) translateY(-120px);" onclick="openMessage(1,this)"></div>
+    <div class="petal" style="transform: rotate(90deg) translateY(-120px);" onclick="openMessage(2,this)"></div>
+    <div class="petal" style="transform: rotate(135deg) translateY(-120px);" onclick="openMessage(3,this)"></div>
+    <div class="petal" style="transform: rotate(180deg) translateY(-120px);" onclick="openMessage(4,this)"></div>
+    <div class="petal" style="transform: rotate(225deg) translateY(-120px);" onclick="openMessage(5,this)"></div>
+    <div class="petal" style="transform: rotate(270deg) translateY(-120px);" onclick="openMessage(6,this)"></div>
+    <div class="petal" style="transform: rotate(315deg) translateY(-120px);" onclick="openMessage(7,this)"></div>
 
 </div>
 
-<div class="message" id="messageBox">
-Click each petal 🌻
+<!-- Popup -->
+<div class="popup" id="popup">
+    <div>
+        <div id="popupText"></div>
+        <button onclick="closeMessage()">Go On 💛</button>
+    </div>
 </div>
 
-<div class="bigMessage" id="finalMessage">
+<!-- Final Big Message -->
+<div class="finalMessage" id="finalMessage">
 Angel… 🌻  
 
-Even if every petal falls,  
-my love for you will never disappear.  
+Every petal carried a truth about you.  
 
-You are my light when days feel dark.  
-You are my warmth when I feel cold.  
-You are the calm in my storms.  
+You are beautiful.  
+You are strong.  
+You are kind.  
+You are rare.  
 
-You are not just amazing —  
-you are rare, special, unforgettable.  
-
-You are my sunflower.  
-And I will always choose you. ❤️
+And no matter what happens…  
+I will always see you as my sunflower —  
+standing tall, shining bright, and full of warmth. ❤️
 </div>
 
 <script>
 const messages = [
-    "You are beautiful in ways words cannot describe.",
-    "Your smile is my favorite thing in the world.",
-    "You make life brighter just by existing.",
+    "You are more beautiful than you think.",
+    "Your smile changes my whole world.",
     "You are stronger than you realize.",
-    "Your heart is full of kindness.",
+    "Your heart is pure gold.",
+    "You make everything feel lighter.",
     "You deserve endless happiness.",
     "You are deeply loved.",
     "You are my forever Angel."
 ];
 
 let petalsLeft = 8;
+let currentPetal = null;
 
-function showMessage(index, petal) {
-    document.getElementById("messageBox").innerText = messages[index];
-    petal.classList.add("fall");
-    petal.style.pointerEvents = "none";
-    petalsLeft--;
+function openMessage(index, petal) {
+    currentPetal = petal;
+    document.getElementById("popupText").innerText = messages[index];
+    document.getElementById("popup").classList.add("show");
+
+    // disable all petals while popup open
+    document.querySelectorAll(".petal").forEach(p => p.classList.add("disabled"));
+}
+
+function closeMessage() {
+    document.getElementById("popup").classList.remove("show");
+
+    // remove clicked petal
+    if (currentPetal) {
+        currentPetal.style.opacity = "0";
+        currentPetal.style.pointerEvents = "none";
+        petalsLeft--;
+    }
+
+    // enable remaining petals
+    document.querySelectorAll(".petal").forEach(p => {
+        if (p.style.opacity !== "0") {
+            p.classList.remove("disabled");
+        }
+    });
 
     if (petalsLeft === 0) {
         setTimeout(() => {
             document.getElementById("finalMessage").classList.add("show");
-        }, 2000);
+        }, 500);
     }
 }
 </script>

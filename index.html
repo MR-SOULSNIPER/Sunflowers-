@@ -40,6 +40,12 @@ h1 {
     background: #4b2e00;
     border-radius: 50%;
     z-index: 2;
+    transition: 0.4s;
+}
+
+/* Hide center when popup open */
+.center.hide {
+    opacity: 0;
 }
 
 /* Petals */
@@ -97,7 +103,7 @@ h1 {
     font-weight: bold;
 }
 
-/* Final Message */
+/* Final message */
 .finalMessage {
     position: fixed;
     inset: 0;
@@ -127,7 +133,7 @@ h1 {
 
 <div class="sunflower">
 
-    <div class="center"></div>
+    <div class="center" id="flowerCenter"></div>
 
     <div class="petal" style="transform: rotate(0deg) translateY(-120px);" onclick="openMessage(0,this)"></div>
     <div class="petal" style="transform: rotate(45deg) translateY(-120px);" onclick="openMessage(1,this)"></div>
@@ -148,16 +154,16 @@ h1 {
 </div>
 
 <div class="finalMessage" id="finalMessage">
-No more petals left… 🌻  
+No petals left… 🌻  
 
-But my words about you will never end.  
+But my words about you will never run out.  
 
 You are beautiful.  
 You are strong.  
 You are rare.  
 You are deeply loved.  
 
-And you will always be special. ❤️
+And that will never change. ❤️
 </div>
 
 <script>
@@ -180,11 +186,15 @@ function openMessage(index, petal) {
     document.getElementById("popupText").innerText = messages[index];
     document.getElementById("popup").classList.add("show");
 
+    document.getElementById("flowerCenter").classList.add("hide");
+
     document.querySelectorAll(".petal").forEach(p => p.classList.add("disabled"));
 }
 
 function closeMessage() {
     document.getElementById("popup").classList.remove("show");
+
+    document.getElementById("flowerCenter").classList.remove("hide");
 
     if (currentPetal) {
         currentPetal.style.opacity = "0";

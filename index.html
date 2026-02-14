@@ -33,6 +33,7 @@ h1 {
     align-items: center;
 }
 
+/* Center */
 .center {
     position: absolute;
     width: 150px;
@@ -40,12 +41,6 @@ h1 {
     background: #4b2e00;
     border-radius: 50%;
     z-index: 2;
-    transition: 0.4s;
-}
-
-/* Hide center when popup open */
-.center.hide {
-    opacity: 0;
 }
 
 /* Petals */
@@ -56,8 +51,8 @@ h1 {
     background: #FFD700;
     border-radius: 50%;
     cursor: pointer;
-    transform-origin: bottom center;
-    transition: 0.5s;
+    transform-origin: center 175px;
+    transition: opacity 0.8s ease, transform 0.5s;
 }
 
 .petal:hover {
@@ -118,7 +113,7 @@ h1 {
     font-weight: bold;
     opacity: 0;
     pointer-events: none;
-    transition: 2s;
+    transition: opacity 2s ease-in-out;
 }
 
 .finalMessage.show {
@@ -132,18 +127,16 @@ h1 {
 <h1>For You 🌻</h1>
 
 <div class="sunflower">
+    <div class="center"></div>
 
-    <div class="center" id="flowerCenter"></div>
-
-    <div class="petal" style="transform: rotate(0deg) translateY(-120px);" onclick="openMessage(0,this)"></div>
-    <div class="petal" style="transform: rotate(45deg) translateY(-120px);" onclick="openMessage(1,this)"></div>
-    <div class="petal" style="transform: rotate(90deg) translateY(-120px);" onclick="openMessage(2,this)"></div>
-    <div class="petal" style="transform: rotate(135deg) translateY(-120px);" onclick="openMessage(3,this)"></div>
-    <div class="petal" style="transform: rotate(180deg) translateY(-120px);" onclick="openMessage(4,this)"></div>
-    <div class="petal" style="transform: rotate(225deg) translateY(-120px);" onclick="openMessage(5,this)"></div>
-    <div class="petal" style="transform: rotate(270deg) translateY(-120px);" onclick="openMessage(6,this)"></div>
-    <div class="petal" style="transform: rotate(315deg) translateY(-120px);" onclick="openMessage(7,this)"></div>
-
+    <div class="petal"></div>
+    <div class="petal"></div>
+    <div class="petal"></div>
+    <div class="petal"></div>
+    <div class="petal"></div>
+    <div class="petal"></div>
+    <div class="petal"></div>
+    <div class="petal"></div>
 </div>
 
 <div class="popup" id="popup">
@@ -155,14 +148,14 @@ h1 {
 
 <div class="finalMessage" id="finalMessage">
 No petals left… 🌻  
-
+<br><br>
 But my words about you will never run out.  
-
+<br><br>
 You are beautiful.  
 You are strong.  
 You are rare.  
 You are deeply loved.  
-
+<br><br>
 And that will never change. ❤️
 </div>
 
@@ -181,20 +174,25 @@ const messages = [
 let petalsLeft = 8;
 let currentPetal = null;
 
+const petals = document.querySelectorAll(".petal");
+
+/* Position petals evenly in circle */
+petals.forEach((petal, index) => {
+    const angle = (360 / petals.length) * index;
+    petal.style.transform = `rotate(${angle}deg) translateY(-150px)`;
+    petal.addEventListener("click", () => openMessage(index, petal));
+});
+
 function openMessage(index, petal) {
     currentPetal = petal;
     document.getElementById("popupText").innerText = messages[index];
     document.getElementById("popup").classList.add("show");
 
-    document.getElementById("flowerCenter").classList.add("hide");
-
-    document.querySelectorAll(".petal").forEach(p => p.classList.add("disabled"));
+    petals.forEach(p => p.classList.add("disabled"));
 }
 
 function closeMessage() {
     document.getElementById("popup").classList.remove("show");
-
-    document.getElementById("flowerCenter").classList.remove("hide");
 
     if (currentPetal) {
         currentPetal.style.opacity = "0";
@@ -202,7 +200,7 @@ function closeMessage() {
         petalsLeft--;
     }
 
-    document.querySelectorAll(".petal").forEach(p => {
+    petals.forEach(p => {
         if (p.style.opacity !== "0") {
             p.classList.remove("disabled");
         }

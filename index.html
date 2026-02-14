@@ -1,0 +1,178 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Angel My Sunflower 🌻</title>
+
+<style>
+body {
+    margin: 0;
+    height: 100vh;
+    background: linear-gradient(to top, #87CEEB, #FFD700);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    font-family: 'Segoe UI', sans-serif;
+    overflow: hidden;
+    transition: 1s;
+}
+
+h1 {
+    color: #5c3d00;
+    margin-bottom: 20px;
+}
+
+.sunflower {
+    position: relative;
+    width: 300px;
+    height: 300px;
+    animation: glow 3s infinite alternate;
+}
+
+@keyframes glow {
+    from { filter: drop-shadow(0 0 10px gold); }
+    to { filter: drop-shadow(0 0 25px orange); }
+}
+
+.center {
+    position: absolute;
+    width: 120px;
+    height: 120px;
+    background: #5c3d00;
+    border-radius: 50%;
+    top: 90px;
+    left: 90px;
+    z-index: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: gold;
+    font-weight: bold;
+    font-size: 20px;
+    text-align: center;
+}
+
+.petal {
+    position: absolute;
+    width: 80px;
+    height: 140px;
+    background: #FFD700;
+    border-radius: 50%;
+    cursor: pointer;
+    transform-origin: bottom center;
+    transition: 0.5s;
+}
+
+.fall {
+    animation: fallDown 2s forwards ease-in;
+}
+
+@keyframes fallDown {
+    to {
+        transform: translateY(600px) rotate(200deg);
+        opacity: 0;
+    }
+}
+
+.message {
+    margin-top: 30px;
+    width: 80%;
+    max-width: 400px;
+    min-height: 60px;
+    padding: 15px;
+    background: white;
+    border-radius: 15px;
+    text-align: center;
+    font-size: 18px;
+}
+
+/* Big Final Message */
+.bigMessage {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.8);
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 40px;
+    font-size: 28px;
+    opacity: 0;
+    pointer-events: none;
+    transition: 2s;
+}
+
+.bigMessage.show {
+    opacity: 1;
+}
+</style>
+</head>
+
+<body>
+
+<h1>For My Beautiful Angel 🌻</h1>
+
+<div class="sunflower">
+    <div class="center">Angel 💛</div>
+
+    <div class="petal" style="top:-20px; left:110px; transform: rotate(0deg);" onclick="showMessage(0,this)"></div>
+    <div class="petal" style="top:10px; left:190px; transform: rotate(45deg);" onclick="showMessage(1,this)"></div>
+    <div class="petal" style="top:90px; left:230px; transform: rotate(90deg);" onclick="showMessage(2,this)"></div>
+    <div class="petal" style="top:170px; left:190px; transform: rotate(135deg);" onclick="showMessage(3,this)"></div>
+    <div class="petal" style="top:200px; left:110px; transform: rotate(180deg);" onclick="showMessage(4,this)"></div>
+    <div class="petal" style="top:170px; left:30px; transform: rotate(225deg);" onclick="showMessage(5,this)"></div>
+    <div class="petal" style="top:90px; left:-10px; transform: rotate(270deg);" onclick="showMessage(6,this)"></div>
+    <div class="petal" style="top:10px; left:30px; transform: rotate(315deg);" onclick="showMessage(7,this)"></div>
+</div>
+
+<div class="message" id="messageBox">
+Click every petal to see something special 🌻
+</div>
+
+<div class="bigMessage" id="finalMessage">
+Angel… 🌻  
+No matter how many petals fall,  
+my love for you will never fade.  
+
+You are my sunshine on dark days,  
+my calm in chaos,  
+my warmth in winter,  
+and my forever sunflower.  
+
+You are more than amazing —  
+you are everything. ❤️
+</div>
+
+<script>
+const messages = [
+    "You shine brighter than the sun.",
+    "Your smile heals my heart.",
+    "You are stronger than you think.",
+    "Your heart is pure gold.",
+    "You make life beautiful.",
+    "You are deeply loved.",
+    "You deserve the world.",
+    "You are my forever."
+];
+
+let petalsLeft = 8;
+
+function showMessage(index, petal) {
+    document.getElementById("messageBox").innerText = messages[index];
+    petal.classList.add("fall");
+    petal.style.pointerEvents = "none";
+    petalsLeft--;
+
+    if (petalsLeft === 0) {
+        setTimeout(() => {
+            document.getElementById("finalMessage").classList.add("show");
+        }, 2000);
+    }
+}
+</script>
+
+</body>
+</html>
